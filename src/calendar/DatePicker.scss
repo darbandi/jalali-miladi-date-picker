@@ -1,0 +1,442 @@
+@font-face {
+  font-family: "iransans";
+  src: url("./../assets/font/IRANSansWeb(FaNum).ttf");
+}
+
+body {
+  background-color: rgb(238, 238, 238);
+  direction: rtl;
+  margin: 50px;
+  font-family: "iransans";
+}
+
+$background: #ffffff;
+$current: rgb(13, 114, 197);
+$rangeColor: #333;
+$rangeBackgroundColor: #e8f5ff;
+$rangeSectionBorderColor: #efefef;
+$textColor: #333;
+$textActiveColor: white;
+$textHoverColor: #333;
+$textHoverBackgroundColor: rgb(219, 239, 255);
+$textWeekNamesColor: #b0b0b0;
+$textSelectedBorderColor: #5a5a5a;
+$rangePickerColor: white;
+$rangePickerBackgrountColor: #0d72c5;
+$disableColor: silver;
+$disableBackgroundColor: transparent;
+
+$background: #222222;
+$current: rgb(255, 255, 255);
+$rangeColor: #d5d5d5;
+$rangeBackgroundColor: #353535;
+$rangeSectionBorderColor: #353535;
+$textColor: white;
+$textActiveColor: #333;
+$textHoverColor: white;
+$textHoverBackgroundColor: #333;
+$textWeekNamesColor: #b0b0b0;
+$textSelectedBorderColor: #8a8a8a;
+$rangePickerColor: white;
+$rangePickerBackgrountColor: #8a8a8a;
+$disableColor: #515151;
+$disableBackgroundColor: transparent;
+
+.calendar {
+  user-select: none;
+  padding: 5px;
+  width: 280px;
+  position: relative;
+  font-size: 12px;
+  color: $textColor;
+  margin: 0 auto;
+  &.jalali {
+    direction: rtl;
+  }
+  &.miladi {
+    direction: ltr;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .weeks-name-section,
+  .days-section {
+    padding: 10px;
+    background-color: $background;
+    display: grid;
+    grid-template-columns: repeat(7, 0fr);
+    grid-gap: 3px 0px;
+  }
+  .footer-section {
+    text-align: center;
+    background-color: $background;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    .today {
+      cursor: pointer;
+    }
+    .type {
+      cursor: pointer;
+      color: silver;
+    }
+  }
+  .date-time{
+    cursor: pointer;
+  }
+  .day,
+  .week {
+    line-height: 38px;
+    text-align: center;
+    width: 37px;
+    height: 37px;
+    margin: 0 auto;
+  }
+  .day {
+    //transition: all 0.3s;
+    font-weight: 700;
+    border-radius: 50%;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $textHoverBackgroundColor;
+      color: $textHoverColor;
+      //transition: all 0.3s;
+    }
+    &.active {
+      border: 1px solid $textSelectedBorderColor;
+      //transition: all 0.3s;
+      box-sizing: border-box;
+      line-height: 36px;
+    }
+    &.select {
+      background-color: $current;
+      color: $textActiveColor;
+      //transition: all 0.3s;
+    }
+
+    &.select-start,
+    &.select-between,
+    &.select-end {
+      position: relative;
+      background-color: $rangePickerBackgrountColor;
+      color: $rangePickerColor;
+      border-radius: 50%;
+      border: none;
+    }
+
+    &.select-start {
+      //   border-radius: 0 50% 50% 0;
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-top: 20px solid $rangeBackgroundColor;
+        border-right: 10px solid transparent;
+        border-left: 0px solid transparent;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 0;
+        border-bottom: 20px solid $rangeBackgroundColor;
+        border-right: 10px solid transparent;
+        border-left: 0px solid transparent;
+      }
+      &.miladi {
+        &::before {
+          right: 0;
+          left: auto;
+          border-left: 10px solid transparent;
+          border-right: 0px solid transparent;
+        }
+        &::after {
+          right: 0;
+          left: auto;
+          border-left: 10px solid transparent;
+          border-right: 0px solid transparent;
+        }
+      }
+    }
+    &.select-between {
+      border-radius: 0;
+      background-color: $rangeBackgroundColor;
+      color: $rangeColor;
+      &.select {
+        background-color: $current;
+        color: $textActiveColor;
+      }
+    }
+    &.select-end {
+      //   border-radius: 50% 0 0 50%;
+
+      &::before {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-top: 20px solid $rangeBackgroundColor;
+        border-left: 10px solid transparent;
+        border-right: 0px solid transparent;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 0;
+        height: 0;
+        border-bottom: 20px solid $rangeBackgroundColor;
+        border-left: 10px solid transparent;
+        border-right: 0px solid transparent;
+      }
+
+      &.miladi {
+        &::before {
+          right: auto;
+          left: 0;
+          border-right: 10px solid transparent;
+          border-left: 0px solid transparent;
+        }
+        &::after {
+          right: auto;
+          left: 0;
+          border-right: 10px solid transparent;
+          border-left: 0px solid transparent;
+        }
+      }
+    }
+
+    &.disable-start,
+    &.disable-end {
+      background-color: $disableBackgroundColor;
+      color: $disableColor;
+      cursor: not-allowed;
+    }
+
+    &.empty {
+      background-color: transparent !important;
+      color: transparent !important;
+      border-color: transparent !important;
+      &:hover,
+      &::after,
+      &::before {
+        cursor: default !important;
+        background-color: transparent !important;
+        color: transparent !important;
+        //transition: all 0.3s;
+        border-color: transparent !important;
+      }
+    }
+  }
+  .weeks-name-section {
+    padding-bottom: 0;
+    .week {
+      color: $textWeekNamesColor;
+    }
+  }
+
+  .time-picker{
+    bdi {
+      margin: 0 !important;
+    }
+    padding: 5px 0;
+    background-color: $background;
+    position:absolute;
+    z-index: 1;
+    top:10px;
+    left:0;
+    width: 100%;
+    border:1px solid $rangeSectionBorderColor;
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+    .time{
+      display: block;
+      font-size: 16px;
+      background-color: $background;
+    }
+  }
+
+  .time-section{
+    display: flex;
+    justify-content: center;
+    background: $background;
+    padding: 15px 0 !important;
+    ::-moz-scrollbars {
+      display:none;
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .btn-container{
+    display: flex;
+    justify-content: center;
+    background-color: $background;
+    padding:0 10px 10px 10px;
+  }
+
+  .btn-ok-cancel{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    border:1px solid $textSelectedBorderColor;
+    margin:5px 2px;
+    font-size: 16px;
+  }
+
+  .vertical-scroll-list{
+    border:1px solid $textColor;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin:0 5px;
+    ul{
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      height: 105px;
+      width: 38px;
+      overflow: auto;
+      // scroll-snap-type: y mandatory;
+      li {
+        // scroll-snap-align: start;
+        text-align: center;
+        margin:0 auto;
+        padding: 8px 4px;
+        line-height: 20px;
+        width: 25px;
+        cursor: pointer;
+        &:hover {
+          background-color: $textHoverBackgroundColor;
+          color: $textHoverColor;
+        }
+        &.active {
+          position: relative;
+          background-color: $current;
+          color: $textActiveColor;
+          transition: all 1s;
+        }
+      }
+    }
+    .arrow-btn{
+      cursor: pointer;
+      margin:8px 0;
+      bdi {
+        margin:0;
+      }
+    }
+  }
+
+  .month-section,
+  .year-section {
+    display: flex;
+    justify-content: space-between;
+    place-items: center;
+    padding: 10px 20px;
+    background-color: $background;
+    .month-text {
+      font-size: 18px;
+    }
+    .back,
+    .next,
+    .month-text {
+      cursor: pointer;
+    }
+    .back,
+    .next {
+      color: silver;
+    }
+
+    .month-list,
+    .year-list {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      padding: 5px;
+      z-index: 1;
+      ul {
+        list-style: none;
+        padding: 0;
+        background-color: $background;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid #80808066;
+        border-right: 1px solid #80808066;
+        height: 258px;
+        overflow: auto;
+        li {
+          padding: 8px 4px;
+          border-left: 1px solid #80808066;
+          border-bottom: 1px solid #80808066;
+          line-height: 37px;
+          cursor: pointer;
+          &:hover {
+            background-color: $textHoverBackgroundColor;
+            color: $textHoverColor;
+            //transition: all 0.3s;
+          }
+          &.active {
+            position: relative;
+            background-color: $current;
+            color: $textActiveColor;
+          }
+        }
+      }
+    }
+    .year-list {
+      ul {
+        grid-template-columns: repeat(5, 1fr);
+      }
+      /* width */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: silver;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: gray;
+        &:hover {
+          background: black;
+        }
+      }
+    }
+  }
+
+  .range-section {
+    text-align: center;
+    position: relative;
+    background-color: $background;
+    border: 1px solid $rangeSectionBorderColor;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    padding: 10px 0;
+    bdi {
+      margin: 0 20px;
+    }
+    .text {
+      color: silver;
+    }
+  }
+}
