@@ -1,6 +1,9 @@
+# Live Demo
+https://jalali-date-picker.netlify.app/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Available Scriptshttps://jalali-date-picker.netlify.app/https://jalali-date-picker.netlify.app/
 
 In the project directory, you can run:
 
